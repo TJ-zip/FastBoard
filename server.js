@@ -17,8 +17,11 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the current directory
-app.use(express.static(path.join(__dirname)));
+// Serve static files from public/.
+// NOTE: on Vercel this line is ignored - Vercel's Express runtime serves
+// public/** directly from its CDN. It is kept so that running
+// `node server.js` locally serves the exact same file tree.
+app.use(express.static(path.join(__dirname, 'public')));
 
 /**
  * MOCK AI GENERATOR
